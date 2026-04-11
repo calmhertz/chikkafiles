@@ -49,10 +49,21 @@ check_time() {
     local end_m=$((10#${END_TIME:2:2}))
     local end=$(( (end_h * 3600) + (end_m * 60) ))
 
-    if (( cur >= start && cur <= end )); then
+    local in_range=0
+    if (( start <= end )); then
+        [[ $cur -ge $start && $cur -le $end ]] && in_range=1
+    else
+        [[ $cur -ge $start || $cur -le $end ]] && in_range=1
+    fi
+
+    if (( in_range == 1 )); then
         echo "yes"
     elif (( cur < start )); then
-        echo $(( start - cur ))
+        if (( start <= end || cur > end )); then
+            echo $(( start - cur ))
+        else
+            echo "yes"
+        fi
     else
         echo $(( (86400 - cur) + start ))
     fi
