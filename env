@@ -1,4 +1,8 @@
 CHIKKAFILES_DIR=/path/to/the/dir/containing/media
 INSTALL_DIR=/path/to/dir/containing/the/scripts
 SLEEP_TIME=43200
-BREAK_TIME=60
+BREAK_TIME=300
+
+# Time must be in 24 hour format e.g. 1500, 1600 etc.
+START_TIME=2000
+END_TIME=0800

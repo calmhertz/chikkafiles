@@ -25,9 +25,17 @@ perform_cycle(){
             perform_cycle "$entry"
         else
             needed="$(need_processing "$entry")"
+            timecheck="$(check_time)"
             if [[ "$needed" == "yes" ]]; then
-                perform_compression "$entry"
-                sleep "$BREAK_TIME"
+                if [[ "$timecheck" == "yes" ]]; then
+                    perform_compression "$entry"
+                    sleep "$BREAK_TIME"
+                else
+                    echo "[I] - Sleeping till START_TIME. -> $timecheck"
+                    sleep "$timecheck"
+                    perform_compression "$entry"
+                    sleep "$BREAK_TIME"
+                fi
             fi
         fi
     done
